@@ -2,4 +2,7 @@ spring:
   application:
     name: bff-agendador
 
+server:
+  port: 8083
+
 usuario.url: localhost:8080/usuario
