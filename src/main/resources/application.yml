@@ -6,3 +6,4 @@ server:
   port: 8083
 
 usuario.url: localhost:8080/usuario
+agendador-tarefas.url: localhost:8081/tarefas
