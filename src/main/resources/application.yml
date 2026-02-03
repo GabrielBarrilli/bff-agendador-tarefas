@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: bff-agendador
+
+usuario.url: localhost:8080/usuario
