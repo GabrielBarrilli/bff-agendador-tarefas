@@ -1,8 +1,12 @@
 package com.barrilli.bffagendadortarefas.controller;
 
-import com.barrilli.bffagendadortarefas.business.dto.EnderecoDTO;
-import com.barrilli.bffagendadortarefas.business.dto.TelefoneDTO;
-import com.barrilli.bffagendadortarefas.business.dto.UsuarioDTO;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioLoginRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.EnderecoRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.TelefoneRequest;
+import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
+import com.barrilli.bffagendadortarefas.business.dto.response.EnderecoResponse;
+import com.barrilli.bffagendadortarefas.business.dto.response.TelefoneResponse;
 import com.barrilli.bffagendadortarefas.infra.security.SecurityConfig;
 import com.barrilli.bffagendadortarefas.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +32,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     @ApiResponse(responseCode = "400", description = "Credenciais inválidas")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public String login(@RequestBody UsuarioDTO dto) {
+    public String login(@RequestBody UsuarioLoginRequest dto) {
         return usuarioService.login(dto);
     }
 
@@ -37,7 +41,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário salvo com sucesso")
     @ApiResponse(responseCode = "400", description = "Usuário já existe")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public UsuarioDTO salvaUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    public UsuarioResponse salvaUsuario(@RequestBody UsuarioRequest usuarioDTO) {
         return usuarioService.salvar(usuarioDTO);
     }
 
@@ -47,8 +51,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Dados inválidos ou endereço já cadastrado")
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public EnderecoDTO cadastraEndereco(@RequestBody EnderecoDTO enderecoDTO,
-                                        @RequestHeader(name = "Authorization", required = false) String token) {
+    public EnderecoResponse cadastraEndereco(@RequestBody EnderecoRequest enderecoDTO,
+                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.cadastraEndereco(token, enderecoDTO);
     }
 
@@ -58,8 +62,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Dados inválidos ou telefone já cadastrado")
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public TelefoneDTO cadastraTelefone(@RequestBody TelefoneDTO telefoneDTO,
-                                        @RequestHeader(name = "Authorization", required = false) String token) {
+    public TelefoneResponse cadastraTelefone(@RequestBody TelefoneRequest telefoneDTO,
+                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.cadastraTelefone(token, telefoneDTO);
     }
 
@@ -68,7 +72,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuários buscados com sucesso")
     @ApiResponse(responseCode = "400", description = "Requisição inválida")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public List<UsuarioDTO> buscarTodosUsuarios() {
+    public List<UsuarioResponse> buscarTodosUsuarios() {
         return usuarioService.buscarTodosUsuarios();
     }
 
@@ -78,8 +82,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public UsuarioDTO buscaUsuarioPorEmail(@RequestParam String email,
-                                           @RequestHeader(name = "Authorization", required = false) String token) {
+    public UsuarioResponse buscaUsuarioPorEmail(@RequestParam String email,
+                                                @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.findUsuarioByEmail(email, token);
     }
 
@@ -89,8 +93,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public UsuarioDTO deleteUsuarioPorId(@PathVariable Long id,
-                                         @RequestHeader(name = "Authorization", required = false) String token) {
+    public UsuarioResponse deleteUsuarioPorId(@PathVariable Long id,
+                                              @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.deleteById(id, token);
     }
 
@@ -112,8 +116,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public UsuarioDTO atualizaUsuario(@RequestBody UsuarioDTO usuarioDTO,
-                                      @RequestHeader(name = "Authorization", required = false) String token) {
+    public UsuarioResponse atualizaUsuario(@RequestBody UsuarioRequest usuarioDTO,
+                                           @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.atualizarUsuario(token, usuarioDTO);
     }
 
@@ -124,9 +128,9 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public EnderecoDTO atualizaEndereco(@RequestParam("id") Long enderecoId,
-                                        @RequestBody EnderecoDTO enderecoDTO,
-                                        @RequestHeader(name = "Authorization", required = false) String token) {
+    public EnderecoResponse atualizaEndereco(@RequestParam("id") Long enderecoId,
+                                             @RequestBody EnderecoRequest enderecoDTO,
+                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.atualizarEndereco(enderecoId, enderecoDTO, token);
     }
 
@@ -137,9 +141,9 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "404", description = "Telefone não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public TelefoneDTO atualizaTelefone(@RequestParam("telefoneId") Long telefoneId,
-                                        @RequestBody TelefoneDTO telefoneDTO,
-                                        @RequestHeader(name = "Authorization", required = false) String token) {
+    public TelefoneResponse atualizaTelefone(@RequestParam("telefoneId") Long telefoneId,
+                                             @RequestBody TelefoneRequest telefoneDTO,
+                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return usuarioService.atualizarTelefone(telefoneId, telefoneDTO, token);
     }
 }

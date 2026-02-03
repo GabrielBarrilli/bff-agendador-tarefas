@@ -1,8 +1,12 @@
 package com.barrilli.bffagendadortarefas.service;
 
-import com.barrilli.bffagendadortarefas.business.dto.EnderecoDTO;
-import com.barrilli.bffagendadortarefas.business.dto.TelefoneDTO;
-import com.barrilli.bffagendadortarefas.business.dto.UsuarioDTO;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioLoginRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.EnderecoRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.TelefoneRequest;
+import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
+import com.barrilli.bffagendadortarefas.business.dto.response.EnderecoResponse;
+import com.barrilli.bffagendadortarefas.business.dto.response.TelefoneResponse;
 import com.barrilli.bffagendadortarefas.infra.client.UsuarioClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,23 +19,23 @@ public class UsuarioService {
 
     private final UsuarioClient usuarioClient;
 
-    public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
+    public UsuarioResponse salvar(UsuarioRequest usuarioDTO) {
         return usuarioClient.salvaUsuario(usuarioDTO);
     }
 
-    public String login(UsuarioDTO dto) {
+    public String login(UsuarioLoginRequest dto) {
         return usuarioClient.login(dto);
     }
 
-    public UsuarioDTO findUsuarioByEmail(String email, String token) {
+    public UsuarioResponse findUsuarioByEmail(String email, String token) {
         return usuarioClient.buscaUsuarioPorEmail(email, token);
     }
 
-    public List<UsuarioDTO> buscarTodosUsuarios() {
+    public List<UsuarioResponse> buscarTodosUsuarios() {
         return usuarioClient.buscarTodosUsuarios();
     }
 
-    public UsuarioDTO deleteById(Long id, String token) {
+    public UsuarioResponse deleteById(Long id, String token) {
         return usuarioClient.deleteUsuarioPorId(id, token);
     }
 
@@ -39,23 +43,23 @@ public class UsuarioService {
         usuarioClient.deleteUsuarioPorEmail(email, token);
     }
 
-    public UsuarioDTO atualizarUsuario(String token, UsuarioDTO usuarioDTO) {
+    public UsuarioResponse atualizarUsuario(String token, UsuarioRequest usuarioDTO) {
         return usuarioClient.atualizaUsuario(usuarioDTO, token);
     }
 
-    public EnderecoDTO atualizarEndereco(Long enderecoId, EnderecoDTO enderecoDTO, String token) {
+    public EnderecoResponse atualizarEndereco(Long enderecoId, EnderecoRequest enderecoDTO, String token) {
         return usuarioClient.atualizaEndereco(enderecoId, enderecoDTO, token);
     }
 
-    public TelefoneDTO atualizarTelefone(Long telefoneId, TelefoneDTO telefoneDTO, String token) {
+    public TelefoneResponse atualizarTelefone(Long telefoneId, TelefoneRequest telefoneDTO, String token) {
         return usuarioClient.atualizaTelefone(telefoneId, telefoneDTO, token);
     }
 
-    public EnderecoDTO cadastraEndereco(String token, EnderecoDTO enderecoDTO) {
+    public EnderecoResponse cadastraEndereco(String token, EnderecoRequest enderecoDTO) {
         return usuarioClient.cadastraEndereco(enderecoDTO, token);
     }
 
-    public TelefoneDTO cadastraTelefone(String token, TelefoneDTO telefoneDTO) {
+    public TelefoneResponse cadastraTelefone(String token, TelefoneRequest telefoneDTO) {
         return usuarioClient.cadastraTelefone(telefoneDTO, token);
     }
 }
