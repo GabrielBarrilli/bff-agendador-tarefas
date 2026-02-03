@@ -1,12 +1,12 @@
 package com.barrilli.bffagendadortarefas.infra.client;
 
-import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioLoginRequest;
-import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioRequest;
 import com.barrilli.bffagendadortarefas.business.dto.request.EnderecoRequest;
 import com.barrilli.bffagendadortarefas.business.dto.request.TelefoneRequest;
-import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioLoginRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioRequest;
 import com.barrilli.bffagendadortarefas.business.dto.response.EnderecoResponse;
 import com.barrilli.bffagendadortarefas.business.dto.response.TelefoneResponse;
+import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

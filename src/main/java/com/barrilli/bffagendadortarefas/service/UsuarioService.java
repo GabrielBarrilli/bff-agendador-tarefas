@@ -1,12 +1,12 @@
 package com.barrilli.bffagendadortarefas.service;
 
-import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioLoginRequest;
-import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioRequest;
 import com.barrilli.bffagendadortarefas.business.dto.request.EnderecoRequest;
 import com.barrilli.bffagendadortarefas.business.dto.request.TelefoneRequest;
-import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioLoginRequest;
+import com.barrilli.bffagendadortarefas.business.dto.request.UsuarioRequest;
 import com.barrilli.bffagendadortarefas.business.dto.response.EnderecoResponse;
 import com.barrilli.bffagendadortarefas.business.dto.response.TelefoneResponse;
+import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
 import com.barrilli.bffagendadortarefas.infra.client.UsuarioClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

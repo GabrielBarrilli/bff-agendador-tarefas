@@ -1,7 +1,7 @@
 package com.barrilli.bffagendadortarefas.controller;
 
-import com.barrilli.bffagendadortarefas.business.dto.request.TarefaRequest;
-import com.barrilli.bffagendadortarefas.business.dto.response.TarefaResponse;
+import com.barrilli.bffagendadortarefas.business.dto.request.TarefasRequest;
+import com.barrilli.bffagendadortarefas.business.dto.response.TarefasResponse;
 import com.barrilli.bffagendadortarefas.infra.enums.StatusNotificacaoEnum;
 import com.barrilli.bffagendadortarefas.infra.security.SecurityConfig;
 import com.barrilli.bffagendadortarefas.service.TarefasService;
@@ -31,8 +31,8 @@ public class TarefasController {
     @ApiResponse(responseCode = "400", description = "Dados inválidos para criação da tarefa")
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public TarefaResponse gravarTarefa(@RequestHeader(name = "Authorization", required = false) String token,
-                                       @RequestBody TarefaRequest tarefasDTO) {
+    public TarefasResponse gravarTarefa(@RequestHeader(name = "Authorization", required = false) String token,
+                                        @RequestBody TarefasRequest tarefasDTO) {
         return tarefasService.gravarTarefa(token, tarefasDTO);
     }
 
@@ -41,7 +41,7 @@ public class TarefasController {
     @ApiResponse(responseCode = "200", description = "Tarefas retornadas com sucesso")
     @ApiResponse(responseCode = "400", description = "Parâmetros de data inválidos")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public List<TarefaResponse> buscaListaTarefasPorPeriodo(
+    public List<TarefasResponse> buscaListaTarefasPorPeriodo(
             @RequestHeader(name = "Authorization", required = false) String token,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal
@@ -54,7 +54,7 @@ public class TarefasController {
     @ApiResponse(responseCode = "200", description = "Tarefas retornadas com sucesso")
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public List<TarefaResponse> buscaListaTarefasPorEmail(@RequestHeader(name = "Authorization", required = false) String token) {
+    public List<TarefasResponse> buscaListaTarefasPorEmail(@RequestHeader(name = "Authorization", required = false) String token) {
         return tarefasService.buscaTarefasPorEmail(token);
     }
 
@@ -75,7 +75,7 @@ public class TarefasController {
     @ApiResponse(responseCode = "400", description = "Dados inválidos")
     @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public TarefaResponse alteraStatusNotificacao(
+    public TarefasResponse alteraStatusNotificacao(
             @RequestHeader(name = "Authorization", required = false) String token,
             @RequestParam("status") StatusNotificacaoEnum statusNotificacaoEnum,
             @RequestParam("id") String id) {
@@ -88,9 +88,9 @@ public class TarefasController {
     @ApiResponse(responseCode = "400", description = "Dados inválidos")
     @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public TarefaResponse updateTarefas(@RequestHeader(name = "Authorization", required = false) String token,
-                                        @RequestBody TarefaRequest tarefasDTO,
-                                        @RequestParam("id") String id) {
+    public TarefasResponse updateTarefas(@RequestHeader(name = "Authorization", required = false) String token,
+                                         @RequestBody TarefasRequest tarefasDTO,
+                                         @RequestParam("id") String id) {
         return tarefasService.updateTarefa(token, tarefasDTO, id);
     }
 }
