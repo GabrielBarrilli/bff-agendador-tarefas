@@ -1,62 +1,11 @@
 services:
-  agendador-tarefas:
-    build: ../agendador-tarefas
-    container_name: agendador-tarefas
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/db_agendador
-    depends_on:
-      - mongo
-
-  bff-agendador-tarefas:
+  bff:
     build: .
-    container_name: bff-agendador-tarefas
     ports:
       - "8083:8083"
     environment:
-      - USUARIO_URL=usuario:8080/usuario
-      - AGENDADOR_TAREFAS_URL=agendador-tarefas:8081/tarefas
-      - NOTIFICACAO_URL=notificacao:8082/email
-
-  usuario:
-    build: ../usuario
-    container_name: usuario
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/usuario
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
-    depends_on:
-      - postgres
-
-  notificacao:
-    build: ../notificacao
-    container_name: notificacao
-    ports:
-      - "8082:8082"
-
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    restart: no
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: usuario
-    ports:
-      - "5433:5432"
-
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    restart: no
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_DATABASE: db_agendador
-
-networks:
-  default:
-    driver: bridge
+      USUARIO_URL: ${USUARIO_URL}
+      AGENDADOR_TAREFAS_URL: ${AGENDADOR_TAREFAS_URL}
+      NOTIFICACAO_URL: ${NOTIFICACAO_URL}
+      USUARIO_EMAIL: ${USUARIO_EMAIL}
+      USUARIO_SENHA: ${USUARIO_SENHA}

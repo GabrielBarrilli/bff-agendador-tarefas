@@ -1,14 +1,17 @@
 spring:
   application:
     name: bff-agendador
+  cloud:
+    compatibility-verifier:
+      enabled: false
 
 server:
   port: 8083
 
-usuario.url: ${USUARIO_URL:localhost:8080}
-agendador-tarefas.url: ${AGENDADOR_TAREFAS_URL:localhost:8081}
-notificacao.url: ${NOTIFICACAO_URL:localhost:8082}
+usuario.url: ${USUARIO_URL:http://usuario:8080}
+agendador-tarefas.url: ${AGENDADOR_TAREFAS_URL:http://agendador-tarefas:8081}
+notificacao.url: ${NOTIFICACAO_URL:http://notificacao:8082}
 
 cron.horario: 0 0/5 * * * ?
-usuario.email: ${USUARIO_EMAIL}
-usuario.senha: ${USUARIO_SENHA}
+usuario.email: ${USUARIO_EMAIL:admin@example.com}
+usuario.senha: ${USUARIO_SENHA:change_me}
