@@ -93,8 +93,11 @@ class UsuarioControllerTest {
 
     @Test
     void deletaPorIdNumerico() throws Exception {
+        when(usuarioClient.deleteUsuarioPorId(7L, AUTH)).thenReturn(UsuarioResponse.builder().email("ana@t.com").build());
+
         mockMvc.perform(delete("/v1/usuario/7").header("Authorization", AUTH))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value("ana@t.com"));
 
         verify(usuarioClient).deleteUsuarioPorId(7L, AUTH);
     }

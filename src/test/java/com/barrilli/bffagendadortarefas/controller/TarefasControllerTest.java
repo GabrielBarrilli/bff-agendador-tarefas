@@ -86,11 +86,18 @@ class TarefasControllerTest {
 
     @Test
     void atualizaTarefa() throws Exception {
-        when(tarefasClient.updateTarefas(eq(AUTH), any(), eq("t1"))).thenReturn(TarefasResponse.builder().id("t1").build());
+        when(tarefasClient.updateTarefas(eq(AUTH), any(), eq("t1")))
+                .thenReturn(TarefasResponse.builder().id("t1").nomeTarefa("Novo").build());
 
         mockMvc.perform(put("/tarefas").param("id", "t1").header("Authorization", AUTH)
                         .contentType(MediaType.APPLICATION_JSON).content("{\"nomeTarefa\":\"Novo\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("t1"))
+                .andExpect(jsonPath("$.nomeTarefa").value("Novo"));
+
+        var request = ArgumentCaptor.forClass(TarefasRequest.class);
+        verify(tarefasClient).updateTarefas(eq(AUTH), request.capture(), eq("t1"));
+        assertThat(request.getValue().getNomeTarefa()).isEqualTo("Novo");
     }
 
     @Test
