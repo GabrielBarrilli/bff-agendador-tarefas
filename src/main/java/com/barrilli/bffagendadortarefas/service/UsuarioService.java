@@ -11,8 +11,6 @@ import com.barrilli.bffagendadortarefas.infra.client.UsuarioClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
@@ -29,10 +27,6 @@ public class UsuarioService {
 
     public UsuarioResponse findUsuarioByEmail(String email, String token) {
         return usuarioClient.buscaUsuarioPorEmail(email, token);
-    }
-
-    public List<UsuarioResponse> buscarTodosUsuarios() {
-        return usuarioClient.buscarTodosUsuarios();
     }
 
     public UsuarioResponse deleteById(Long id, String token) {

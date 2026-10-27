@@ -13,30 +13,34 @@ import java.util.List;
 @FeignClient(name = "tarefas", url = "${agendador-tarefas.url}")
 public interface TarefasClient {
 
-    @PostMapping("/tarefas")
+    @PostMapping("/v1/tarefas")
     TarefasResponse gravarTarefa(@RequestHeader("Authorization") String token,
                                  @RequestBody TarefasRequest tarefasDTO);
 
-    @GetMapping("/tarefas/eventos")
-    List<TarefasResponse> buscaListaTarefasPorPeriodo(
-            @RequestHeader("Authorization") String token,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal
-    );
-
-    @GetMapping("/tarefas/email")
+    @GetMapping("/v1/tarefas/email")
     List<TarefasResponse> buscaListaTarefasPorEmail(@RequestHeader("Authorization") String token);
 
-    @DeleteMapping("/tarefas")
+    @DeleteMapping("/v1/tarefas")
     void deleterTarefaPorId(@RequestHeader("Authorization") String token, @RequestParam String id);
 
-    @PatchMapping("/tarefas")
+    @PatchMapping("/v1/tarefas")
     TarefasResponse alteraStatusNotificacao(@RequestHeader("Authorization") String token,
                                             @RequestParam("status") StatusNotificacaoEnum statusNotificacaoEnum,
                                             @RequestParam("id") String id);
 
-    @PutMapping("/tarefas")
+    @PutMapping("/v1/tarefas")
     TarefasResponse updateTarefas(@RequestHeader("Authorization") String token,
                                   @RequestBody TarefasRequest tarefasDTO,
                                   @RequestParam("id") String id);
+
+    @GetMapping("/internal/tarefas/pendentes")
+    List<TarefasResponse> buscaTarefasPendentes(
+            @RequestHeader("X-Internal-Key") String internalKey,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime inicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fim
+    );
+
+    @PatchMapping("/internal/tarefas/{id}/notificada")
+    TarefasResponse marcaComoNotificada(@RequestHeader("X-Internal-Key") String internalKey,
+                                        @PathVariable String id);
 }

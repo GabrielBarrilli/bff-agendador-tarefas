@@ -16,8 +16,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/v1/usuario")
 @RequiredArgsConstructor
@@ -67,15 +65,6 @@ public class UsuarioController {
         return usuarioService.cadastraTelefone(token, telefoneDTO);
     }
 
-    @GetMapping
-    @Operation(summary = "Buscar todos os usuários", description = "Endpoint para buscar todos os usuários")
-    @ApiResponse(responseCode = "200", description = "Usuários buscados com sucesso")
-    @ApiResponse(responseCode = "400", description = "Requisição inválida")
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public List<UsuarioResponse> buscarTodosUsuarios() {
-        return usuarioService.buscarTodosUsuarios();
-    }
-
     @GetMapping("/email")
     @Operation(summary = "Buscar usuário por e-mail", description = "Recupera um usuário pelo e-mail informado")
     @ApiResponse(responseCode = "200", description = "Usuário encontrado")
@@ -87,7 +76,7 @@ public class UsuarioController {
         return usuarioService.findUsuarioByEmail(email, token);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id:\\d+}")
     @Operation(summary = "Deletar usuário por ID", description = "Remove permanentemente o usuário identificado pelo ID")
     @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso")
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
@@ -98,7 +87,7 @@ public class UsuarioController {
         return usuarioService.deleteById(id, token);
     }
 
-    @DeleteMapping("/{email}")
+    @DeleteMapping("/email/{email}")
     @Operation(summary = "Deletar usuário por e-mail", description = "Remove o usuário a partir do e-mail informado")
     @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso")
     @ApiResponse(responseCode = "401", description = "Token de autorização ausente ou inválido")
