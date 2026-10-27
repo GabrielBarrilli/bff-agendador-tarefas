@@ -20,8 +20,12 @@ public class TarefasService {
         return tarefasClient.gravarTarefa(token, tarefasDTO);
     }
 
-    public List<TarefasResponse> buscaTarefasAgendadasPorPeriodo(String token, LocalDateTime dataInicial, LocalDateTime dataFinal) {
-        return tarefasClient.buscaListaTarefasPorPeriodo(token, dataInicial, dataFinal);
+    public List<TarefasResponse> buscaTarefasPendentes(String internalKey, LocalDateTime inicio, LocalDateTime fim) {
+        return tarefasClient.buscaTarefasPendentes(internalKey, inicio, fim);
+    }
+
+    public void marcaComoNotificada(String internalKey, String id) {
+        tarefasClient.marcaComoNotificada(internalKey, id);
     }
 
     public List<TarefasResponse> buscaTarefasPorEmail(String token) {

@@ -10,51 +10,46 @@ import com.barrilli.bffagendadortarefas.business.dto.response.UsuarioResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @FeignClient(name = "usuario", url = "${usuario.url}")
 public interface UsuarioClient {
 
-    @PostMapping("/login")
+    @PostMapping("/v1/usuario/login")
     String login(@RequestBody UsuarioLoginRequest dto);
 
-    @PostMapping("/usuario")
+    @PostMapping("/v1/usuario")
     UsuarioResponse salvaUsuario(@RequestBody UsuarioRequest usuarioDTO);
 
-    @GetMapping("/usuario")
+    @GetMapping("/v1/usuario/email")
     UsuarioResponse buscaUsuarioPorEmail(@RequestParam String email,
                                          @RequestHeader("Authorization") String token);
 
-    @PutMapping("/usuario")
+    @PutMapping("/v1/usuario")
     UsuarioResponse atualizaUsuario(@RequestBody UsuarioRequest usuarioDTO,
                                     @RequestHeader("Authorization") String token);
 
-    @GetMapping("/usuario")
-    List<UsuarioResponse> buscarTodosUsuarios();
-
-    @DeleteMapping("/usuario/{id}")
+    @DeleteMapping("/v1/usuario/{id}")
     UsuarioResponse deleteUsuarioPorId(@PathVariable Long id,
                                        @RequestHeader("Authorization") String token);
 
-    @DeleteMapping("/usuario/{email}")
+    @DeleteMapping("/v1/usuario/email/{email}")
     void deleteUsuarioPorEmail(@PathVariable String email,
                                @RequestHeader("Authorization") String token);
 
-    @PutMapping("/usuario/endereco")
+    @PutMapping("/v1/usuario/endereco")
     EnderecoResponse atualizaEndereco(@RequestParam("id") Long enderecoId,
                                       @RequestBody EnderecoRequest enderecoDTO,
                                       @RequestHeader("Authorization") String token);
 
-    @PutMapping("/usuario/telefone")
+    @PutMapping("/v1/usuario/telefone")
     TelefoneResponse atualizaTelefone(@RequestParam("telefoneId") Long telefoneId,
                                       @RequestBody TelefoneRequest telefoneDTO,
                                       @RequestHeader("Authorization") String token);
 
-    @PostMapping("/usuario/endereco")
+    @PostMapping("/v1/usuario/endereco")
     EnderecoResponse cadastraEndereco(@RequestBody EnderecoRequest enderecoDTO,
                                       @RequestHeader("Authorization") String token);
 
-    @PostMapping("/usuario/telefone")
+    @PostMapping("/v1/usuario/telefone")
     TelefoneResponse cadastraTelefone(@RequestBody TelefoneRequest telefoneDTO,
                                       @RequestHeader("Authorization") String token);
 }

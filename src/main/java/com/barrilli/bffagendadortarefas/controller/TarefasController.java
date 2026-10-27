@@ -10,10 +10,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -34,19 +32,6 @@ public class TarefasController {
     public TarefasResponse gravarTarefa(@RequestHeader(name = "Authorization", required = false) String token,
                                         @RequestBody TarefasRequest tarefasDTO) {
         return tarefasService.gravarTarefa(token, tarefasDTO);
-    }
-
-    @GetMapping("/eventos")
-    @Operation(summary = "Listar tarefas por período", description = "Retorna tarefas agendadas entre duas datas")
-    @ApiResponse(responseCode = "200", description = "Tarefas retornadas com sucesso")
-    @ApiResponse(responseCode = "400", description = "Parâmetros de data inválidos")
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public List<TarefasResponse> buscaListaTarefasPorPeriodo(
-            @RequestHeader(name = "Authorization", required = false) String token,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal
-    ) {
-        return tarefasService.buscaTarefasAgendadasPorPeriodo(token, dataInicial, dataFinal);
     }
 
     @GetMapping("/email")

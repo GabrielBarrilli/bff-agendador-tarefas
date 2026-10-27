@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "notificacao", url = "${notificacao.url}")
 public interface EmailClient {
 
-    @PostMapping
+    @PostMapping("/v1/email")
     void enviarEmail(@RequestBody TarefasResponse tarefasDTO);
 }
